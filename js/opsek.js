@@ -1,4 +1,4 @@
-/* OpSek V13. Nur Darstellung: kein Netzwerk, keine Cookies, kein Tracking.
+/* OpSek V14. Nur Darstellung: kein Netzwerk, keine Cookies, kein Tracking.
    localStorage nur für das einmalige Ausblenden des Hinweises.
    Texte kommen aus dem JSON-Block #opsek-t in jeder Sprachseite. */
 (function () {
@@ -62,14 +62,13 @@
   })();
 
   /* ---------- Kopfzeile: Fortschritt, Nach-oben, aktiver Menüpunkt ---------- */
-  var hdr = $('.hdr'), totop = $('.totop'), heroEl = $('.hero'), heroFrame = $('.hv-frame');
+  var hdr = $('.hdr'), totop = $('.totop');
   var navLinks = $$('.nav a'), navTargets = navLinks.map(function (a) { return d.getElementById(a.getAttribute('href').slice(1)); });
   function onScroll() {
     var y = window.scrollY, max = root.scrollHeight - window.innerHeight;
     hdr.style.setProperty('--p', max > 0 ? (y / max).toFixed(4) : 0);
     $('.progress em').style.setProperty('--p', max > 0 ? (y / max).toFixed(4) : 0);
     totop.classList.toggle('show', y > window.innerHeight * 0.9);
-    if (heroFrame && !reduce) heroFrame.style.setProperty('--hp', clamp(y / (heroEl.offsetHeight || 1), 0, 1).toFixed(3));
     var cur = -1; navTargets.forEach(function (t, i) { if (t && t.getBoundingClientRect().top < window.innerHeight * 0.4) cur = i; });
     navLinks.forEach(function (a, i) { a.classList.toggle('on', i === cur); });
   }
@@ -80,36 +79,105 @@
   });
   window.addEventListener('scroll', onScroll, { passive: true }); window.addEventListener('resize', onScroll); onScroll();
 
-  /* ---------- Lupe über dem Hero-Bild ----------
-     Zeigt eine echte, vergrösserte Kopie des Bildes (gleiches Zuschneiden, gleiche Maske), dadurch deckungsgleich.
-     Gesteuert nur über Zeigerposition, nicht über enter/leave. */
-  (function loupe() {
-    var f = heroFrame, img = f && $('img', f), host = f && f.parentNode; if (!img || reduce || !fine) return;
-    var l = d.createElement('div'); l.className = 'loupe'; l.setAttribute('aria-hidden', 'true');
-    l.innerHTML = '<div class="lp-view"><div class="lp-inner"></div></div><i class="ring"></i><i class="ring2"></i><i class="cross"></i><span class="lp-tag">2×</span>';
-    host.appendChild(l);
-    var inner = $('.lp-inner', l), clone = img.cloneNode(false);
-    clone.removeAttribute('srcset'); clone.removeAttribute('sizes'); clone.removeAttribute('fetchpriority');
-    clone.src = img.src; clone.alt = ''; clone.loading = 'lazy';
-    inner.appendChild(clone);
-    var Z = 2, on = false, raf = 0, px = 0, py = 0;
-    function render() {
-      raf = 0;
-      var fr = f.getBoundingClientRect(), hr = host.getBoundingClientRect();
-      var x = px - fr.left, y = py - fr.top, inside = x >= 0 && y >= 0 && x <= fr.width && y <= fr.height;
-      if (inside !== on) { on = inside; l.classList.toggle('on', on); f.classList.toggle('zoom', on); }
-      if (!on) return;
-      var R = l.offsetWidth / 2, m = R * 0.45; x = clamp(x, m, fr.width - m); y = clamp(y, m, fr.height - m);
-      l.style.transform = 'translate3d(' + (fr.left - hr.left + x - R).toFixed(1) + 'px,' + (fr.top - hr.top + y - R).toFixed(1) + 'px,0)';
-      inner.style.width = fr.width + 'px'; inner.style.height = fr.height + 'px';
-      inner.style.setProperty('--hp', getComputedStyle(f).getPropertyValue('--hp') || 0);
-      inner.style.transform = 'translate3d(' + (R - x * Z).toFixed(1) + 'px,' + (R - y * Z).toFixed(1) + 'px,0) scale(' + Z + ')';
+  /* ---------- Hero: Sicherheits-Stapel ----------
+     Grosser Bildschirm: der Hero bleibt stehen, Scrollen führt durch die sieben Schritte.
+     Handy und Tablet: Schritte wechseln von selbst, antippen geht jederzeit. */
+  (function secureStack() {
+    var fig = $('[data-sx]'); if (!fig) return;
+    var hero = fig.closest('.hero'), stack = $('[data-sx-stack]', fig);
+    var slabs = $$('.sx-slab', fig), cards = $$('.sx-c', fig), dots = $$('.sx-dot', fig), card = $('.sx-card', fig);
+    var hint = $('.sx-hint', fig), line = $('[data-sx-line]', fig), ldot = $('[data-sx-dot]', fig);
+    var N = slabs.length, cur = -1, pin = false, inView = true, auto = 0, pauseUntil = 0, scr = [];
+    var mq = window.matchMedia ? window.matchMedia('(min-width: 1200px) and (min-height: 640px)') : null;
+
+    /* Zeichensalat, der sich zum Klartext auflöst (Signatur, Nachricht) */
+    function scramble(el) {
+      var target = el.getAttribute('data-sx-scr'), t0 = 0, id = 0;
+      function frame(now) {
+        if (!t0) t0 = now;
+        var k = (now - t0) / 1300, n = Math.floor(clamp(k, 0, 1) * target.length), out = '';
+        for (var i = 0; i < target.length; i++) out += i < n || target[i] === ' ' ? target[i] : rnd(1, 'ABCDEF0123456789#%&').toUpperCase();
+        el.textContent = out;
+        if (k < 1) id = requestAnimationFrame(frame);
+        else id = setTimeout(function () { t0 = 0; id = requestAnimationFrame(frame); }, 2300);
+      }
+      id = requestAnimationFrame(frame);
+      return function () { cancelAnimationFrame(id); clearTimeout(id); el.textContent = target; };
     }
-    function req(e) { px = e.clientX; py = e.clientY; if (!raf) raf = requestAnimationFrame(render); }
-    d.addEventListener('pointermove', function (e) { if (e.pointerType === 'mouse') req(e); }, { passive: true });
-    window.addEventListener('scroll', function () { if (on) { if (!raf) raf = requestAnimationFrame(render); } }, { passive: true });
-    d.addEventListener('mouseout', function (e) { if (!e.relatedTarget) { on = false; l.classList.remove('on'); f.classList.remove('zoom'); } });
-    var scan = $('.hv-scan', f); if (scan) scan.style.setProperty('--h', f.offsetHeight + 'px');
+
+    function drawLine() {
+      if (!line || cur < 0 || !pin && window.innerWidth < 1200) return;
+      var f = fig.getBoundingClientRect(), s = slabs[cur].getBoundingClientRect(), c = card.getBoundingClientRect();
+      var x1 = s.right - s.width * 0.12 - f.left, y1 = s.top + s.height * 0.5 - f.top;
+      var x2 = c.left - f.left, y2 = clamp(y1, c.top - f.top + 30, c.bottom - f.top - 30);
+      var mx = x1 + (x2 - x1) * 0.55;
+      line.setAttribute('d', 'M' + x1.toFixed(1) + ' ' + y1.toFixed(1) + 'L' + mx.toFixed(1) + ' ' + y1.toFixed(1) + 'L' + mx.toFixed(1) + ' ' + y2.toFixed(1) + 'L' + x2.toFixed(1) + ' ' + y2.toFixed(1));
+      ldot.setAttribute('cx', x1.toFixed(1)); ldot.setAttribute('cy', y1.toFixed(1));
+    }
+    function follow(ms) {
+      var end = performance.now() + ms;
+      (function f(now) { drawLine(); if (now < end) requestAnimationFrame(f); })(performance.now());
+    }
+
+    function set(i) {
+      i = clamp(i, 0, N - 1); if (i === cur) return; cur = i;
+      fig.setAttribute('data-step', i);
+      slabs.forEach(function (s, k) { s.classList.toggle('on', k === i); s.classList.toggle('below', k < i); s.classList.toggle('above', k > i); });
+      cards.forEach(function (c, k) { c.hidden = k !== i; });
+      dots.forEach(function (b, k) { b.classList.toggle('on', k === i); b.classList.toggle('done', k < i); b.setAttribute('aria-pressed', k === i ? 'true' : 'false'); });
+      scr.forEach(function (stop) { stop(); }); scr = [];
+      if (!reduce) $$('[data-sx-scr]', cards[i]).forEach(function (el) { scr.push(scramble(el)); });
+      follow(900);
+    }
+
+    function fromScroll() {
+      if (!pin) return;
+      var r = hero.getBoundingClientRect(), span = hero.offsetHeight - window.innerHeight;
+      var p = clamp(-r.top / (span || 1), 0, 1);
+      set(Math.min(N - 1, Math.floor(p * N)));
+      if (stack && fine) stack.style.setProperty('--rz', (-38 + p * 16).toFixed(2) + 'deg');
+    }
+    function mode() {
+      pin = !!(mq && mq.matches) && !reduce;
+      if (hero) hero.classList.toggle('sx-pin', pin);
+      if (hint) hint.textContent = hint.getAttribute(pin ? 'data-pin' : 'data-tap');
+      if (pin) fromScroll();
+      follow(300);
+    }
+
+    dots.forEach(function (b) {
+      b.addEventListener('click', function () {
+        var i = +b.getAttribute('data-s');
+        if (pin) {
+          var span = hero.offsetHeight - window.innerHeight;
+          window.scrollTo({ top: hero.offsetTop + (i + 0.5) / N * span, behavior: reduce ? 'auto' : 'smooth' });
+        } else { set(i); pauseUntil = Date.now() + 15000; }
+      });
+      b.addEventListener('keydown', function (e) {
+        var k = dots.indexOf(b), n = null;
+        if (e.key === 'ArrowRight') n = dots[(k + 1) % N]; if (e.key === 'ArrowLeft') n = dots[(k + N - 1) % N];
+        if (n) { e.preventDefault(); n.focus(); n.click(); }
+      });
+    });
+
+    /* Automatisch weiter, nur wenn sichtbar, nicht fixiert und keine reduzierte Bewegung */
+    if (!reduce) auto = setInterval(function () {
+      if (pin || !inView || d.hidden || Date.now() < pauseUntil) return;
+      set((cur + 1) % N);
+    }, 4200);
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { inView = es[0].isIntersecting; }, { threshold: 0.35 }).observe(fig);
+
+    var tick = false;
+    window.addEventListener('scroll', function () { if (pin && !tick) { tick = true; requestAnimationFrame(function () { tick = false; fromScroll(); }); } }, { passive: true });
+    window.addEventListener('resize', function () { mode(); follow(200); });
+    if (mq && mq.addEventListener) mq.addEventListener('change', mode);
+    set(0); mode();
+    if (fine && !reduce && stack) fig.addEventListener('mousemove', function (e) {
+      var r = fig.getBoundingClientRect(), mx = (e.clientX - r.left) / r.width - 0.5, my = (e.clientY - r.top) / r.height - 0.5;
+      stack.style.setProperty('--rx', (58 - my * 6).toFixed(2) + 'deg');
+      if (!pin) stack.style.setProperty('--rz', (-38 + mx * 10).toFixed(2) + 'deg');
+      follow(120);
+    });
   })();
 
   /* ---------- Erscheinen und Titel-Entschlüsselung ---------- */
