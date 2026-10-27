@@ -4704,3 +4704,506 @@ a.linkbtn {
 .sx-slab.on .sl-t {
   opacity: 1;
 }
+
+/* =====================================================================
+   V15 Vergleich: Android, iOS, GrapheneOS (nur Namen, keine fremden Logos)
+   ===================================================================== */
+.vh {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+.cmp {
+  --and: #3ddc84;
+  --ios: #e6e8ec;
+  --gos: var(--acc);
+}
+.cmp .intro {
+  max-width: 44rem;
+  color: var(--ink2);
+}
+.cmp-box {
+  margin-top: 40px;
+  display: grid;
+  gap: 18px;
+}
+.s-and { --c: var(--and); }
+.s-ios { --c: var(--ios); }
+.s-gos { --c: var(--gos); }
+.c-and { --c: var(--and); }
+.c-ios { --c: var(--ios); }
+.c-gos { --c: var(--gos); }
+/* Systemkarten */
+.cmp-cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+@media (min-width: 760px) {
+  .cmp-cards {
+    gap: 16px;
+  }
+}
+.cmp-sys {
+  position: relative;
+  display: grid;
+  justify-items: start;
+  gap: 4px;
+  padding: 16px 14px 14px;
+  border-radius: var(--r3);
+  border: 1px solid var(--line);
+  background:
+    radial-gradient(120% 90% at 0% 0%, color-mix(in srgb, var(--c) 9%, transparent), transparent 60%),
+    var(--bg2);
+  overflow: hidden;
+}
+@media (min-width: 760px) {
+  .cmp-sys {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    padding: 22px 22px 18px;
+  }
+  .cmp-sys .cmp-ring {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+  }
+}
+.cmp-sys::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--c), transparent);
+  opacity: 0.7;
+}
+.s-gos {
+  border-color: rgba(143, 184, 255, 0.45);
+  box-shadow:
+    0 0 0 1px rgba(143, 184, 255, 0.12),
+    0 20px 60px rgba(143, 184, 255, 0.1);
+}
+.cmp-sn {
+  margin: 0;
+  font-size: clamp(16px, 2.4vw, 24px);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  color: var(--ink);
+}
+.s-ios .cmp-sn {
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-weight: 600;
+}
+.s-gos .cmp-sn {
+  font-weight: 500;
+  letter-spacing: 0;
+}
+.cmp-ss {
+  margin: 0;
+  font: 500 10.5px/1.4 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.cmp-ml {
+  margin: 4px 0 0;
+  font: 500 10.5px/1.4 var(--mono);
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.cmp-ml span:first-child {
+  color: var(--c);
+}
+@media (max-width: 759px) {
+  .cmp-ml {
+    display: none;
+  }
+}
+.cmp-ring {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  margin-top: 8px;
+}
+@media (min-width: 760px) {
+  .cmp-ring {
+    width: 76px;
+    height: 76px;
+    margin: 0;
+  }
+}
+.cmp-ring svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+.cmp-ring circle {
+  fill: none;
+  stroke-width: 5;
+}
+.cmp-ring .rb {
+  stroke: var(--line2);
+}
+.cmp-ring .rf {
+  stroke: var(--c);
+  stroke-linecap: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: calc(100 - var(--v, 0));
+  filter: drop-shadow(0 0 5px color-mix(in srgb, var(--c) 60%, transparent));
+  transition: stroke-dashoffset 1.1s var(--ease);
+}
+.cmp-ring b {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font: 500 16px/1 var(--mono);
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+@media (min-width: 760px) {
+  .cmp-ring b {
+    font-size: 20px;
+  }
+}
+/* Filter */
+.cmp-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.cmp-fs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.cmp-f {
+  appearance: none;
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line2);
+  background: transparent;
+  color: var(--ink2);
+  font: 500 13px/1 var(--sans);
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+.cmp-f:hover {
+  color: var(--ink);
+  border-color: var(--muted);
+}
+.cmp-f.on {
+  color: var(--acc-ink);
+  background: var(--acc);
+  border-color: var(--acc);
+}
+.cmp-f:focus-visible,
+.cmp-tg input:focus-visible + .tg {
+  outline: 2px solid var(--acc);
+  outline-offset: 3px;
+}
+.cmp-tg {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--ink2);
+  cursor: pointer;
+}
+.cmp-tg input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+.cmp-tg .tg {
+  position: relative;
+  width: 38px;
+  height: 22px;
+  border-radius: 11px;
+  border: 1px solid var(--line2);
+  background: var(--bg2);
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+.cmp-tg .tg::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--muted);
+  transition: transform 0.35s var(--ease), background 0.3s ease;
+}
+.cmp-tg input:checked + .tg {
+  background: var(--acc-soft);
+  border-color: var(--acc);
+}
+.cmp-tg input:checked + .tg::after {
+  transform: translateX(16px);
+  background: var(--acc);
+}
+/* Tabelle */
+.cmp-t {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 15px;
+}
+.cmp-t thead th {
+  position: sticky;
+  top: var(--hdr);
+  z-index: 2;
+  padding: 12px 12px;
+  background: color-mix(in srgb, var(--bg) 94%, transparent);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--line2);
+  font: 500 11px/1.2 var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: left;
+}
+.cmp-t thead th.c-and,
+.cmp-t thead th.c-ios,
+.cmp-t thead th.c-gos {
+  text-align: center;
+  color: var(--c);
+  width: 17%;
+}
+.cmp-t thead th.c-gos {
+  border-top: 1px solid rgba(143, 184, 255, 0.45);
+  border-radius: 12px 12px 0 0;
+  background: linear-gradient(rgba(143, 184, 255, 0.12), rgba(143, 184, 255, 0.05)), var(--bg);
+}
+.cmp-g th {
+  padding: 22px 12px 8px;
+  font: 500 11px/1.2 var(--mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--acc);
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+}
+.cmp-r th {
+  padding: 13px 12px;
+  text-align: left;
+  font-weight: 400;
+  color: var(--ink);
+  border-bottom: 1px solid var(--line);
+}
+.cmp-r th small {
+  display: block;
+  margin-top: 3px;
+  font: 400 12.5px/1.4 var(--sans);
+  color: var(--muted);
+}
+.cmp-r td {
+  padding: 13px 8px;
+  text-align: center;
+  border-bottom: 1px solid var(--line);
+  vertical-align: middle;
+}
+.cmp-r td.c-gos,
+.cmp-g + .cmp-r td.c-gos {
+  background: rgba(143, 184, 255, 0.05);
+  border-inline: 1px solid rgba(143, 184, 255, 0.18);
+}
+.cmp-r:hover th,
+.cmp-r:hover td {
+  background-color: rgba(255, 255, 255, 0.025);
+}
+.cmp-r:hover td.c-gos {
+  background-color: rgba(143, 184, 255, 0.09);
+}
+.cmp-r[hidden],
+.cmp-g[hidden] {
+  display: none;
+}
+.cmp-r.fresh {
+  animation: cmp-in 0.5s var(--ease) both;
+  animation-delay: calc(var(--n, 0) * 28ms);
+}
+@keyframes cmp-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+/* Markierungen */
+.mk {
+  position: relative;
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+.v-yes .mk {
+  background: var(--c);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--c) 45%, transparent);
+}
+.v-yes .mk::after {
+  content: "";
+  position: absolute;
+  left: 6.5px;
+  top: 3.5px;
+  width: 4px;
+  height: 8px;
+  border: solid var(--bg);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.v-part .mk {
+  border: 1.5px solid var(--c);
+  background: conic-gradient(var(--c) 0 50%, transparent 0);
+  transform: rotate(90deg);
+  opacity: 0.85;
+}
+.v-no .mk {
+  width: 14px;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--muted);
+  opacity: 0.6;
+}
+.v-na .mk {
+  width: auto;
+  height: auto;
+  border-radius: 0;
+}
+.v-na .mk::after {
+  content: "–";
+  color: var(--muted);
+}
+.mw {
+  display: block;
+  margin-top: 5px;
+  font: 500 10.5px/1 var(--mono);
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.v-yes .mw {
+  color: var(--ink2);
+}
+.c-gos.v-yes .mw {
+  color: var(--acc);
+}
+/* Handy: jede Zeile als Karte */
+@media (max-width: 759px) {
+  .cmp-t,
+  .cmp-t tbody {
+    display: block;
+  }
+  .cmp-t thead {
+    display: none;
+  }
+  .cmp-g {
+    display: block;
+  }
+  .cmp-g th {
+    display: block;
+    padding: 22px 2px 8px;
+  }
+  .cmp-r {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: 8px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--bg2);
+    overflow: hidden;
+  }
+  .cmp-r th {
+    grid-column: 1 / -1;
+    border-bottom: 1px solid var(--line);
+  }
+  .cmp-r td {
+    display: grid;
+    justify-items: center;
+    gap: 6px;
+    padding: 10px 4px 12px;
+    border-bottom: 0;
+  }
+  .cmp-r td::before {
+    content: attr(data-l);
+    font: 500 10px/1 var(--mono);
+    letter-spacing: 0.06em;
+    color: var(--c);
+  }
+  .cmp-r td.c-gos {
+    border-inline: 0;
+    border-left: 1px solid rgba(143, 184, 255, 0.2);
+  }
+  .mw {
+    margin-top: 0;
+  }
+}
+.cmp-leg {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+.cmp-leg b {
+  font-weight: 500;
+  color: var(--ink2);
+}
+.cmp-lim {
+  margin-top: 28px;
+  max-width: 44rem;
+}
+.cmp-src {
+  margin: 14px 0 0;
+  max-width: 44rem;
+  font: 500 11px/1.6 var(--mono);
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+@media (prefers-reduced-motion: reduce) {
+  .cmp-r.fresh {
+    animation: none;
+  }
+  .cmp-ring .rf,
+  .cmp-tg .tg::after {
+    transition: none;
+  }
+}
+/* Karten: eigene Ebene, damit Ring-Leuchten nicht in die Karte ausblutet */
+.cmp-sys {
+  isolation: isolate;
+  contain: paint;
+}
+@media (max-width: 759px) {
+  .cmp-ring .rf {
+    filter: none;
+  }
+}
+.cmp-sys {
+  background: linear-gradient(160deg, color-mix(in srgb, var(--c) 8%, var(--bg2)), var(--bg2) 55%);
+}
+@media (max-width: 759px) {
+  .cmp-sn {
+    font-size: 14.5px;
+  }
+  .cmp-sys {
+    padding: 14px 10px 12px;
+  }
+}

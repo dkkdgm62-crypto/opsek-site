@@ -1,4 +1,4 @@
-/* OpSek V14. Nur Darstellung: kein Netzwerk, keine Cookies, kein Tracking.
+/* OpSek V15. Nur Darstellung: kein Netzwerk, keine Cookies, kein Tracking.
    localStorage nur für das einmalige Ausblenden des Hinweises.
    Texte kommen aus dem JSON-Block #opsek-t in jeder Sprachseite. */
 (function () {
@@ -493,6 +493,57 @@
       es.forEach(function (e) { inView = e.isIntersecting; if (inView) { el.classList.add('drawn'); on(); } else off(); });
     }, { threshold: 0.2 }).observe(el);
     d.addEventListener('visibilitychange', function () { if (d.hidden) off(); else if (inView) on(); });
+  })();
+
+  /* ---------- Vergleich: Filter, nur Unterschiede, Zählringe ---------- */
+  (function compare() {
+    var box = $('[data-cmp]'); if (!box) return;
+    var rows = $$('.cmp-r', box), groups = $$('.cmp-g', box), chips = $$('.cmp-f', box), diff = $('[data-diff]', box);
+    var cols = ['and', 'ios', 'gos'], cards = {}, f = 'all', seen = false, shown = {};
+    $$('.cmp-sys', box).forEach(function (c) {
+      cards[c.getAttribute('data-col')] = c;
+      /* Ringe starten leer und füllen sich, sobald der Vergleich sichtbar wird */
+      if (!reduce) { c.style.setProperty('--v', 0); $('[data-cnt]', c).textContent = '0'; $('[data-cnt-t]', c).textContent = '0'; }
+    });
+    function count(el, to) {
+      var b = $('[data-cnt]', el), t = $('[data-cnt-t]', el), from = +(b.textContent) || 0;
+      if (reduce) { b.textContent = to; t.textContent = to; return; }
+      var t0 = performance.now();
+      (function step(now) {
+        var k = clamp((now - t0) / 900, 0, 1), v = Math.round(from + (to - from) * (1 - Math.pow(1 - k, 3)));
+        b.textContent = v; t.textContent = v; if (k < 1) requestAnimationFrame(step);
+      })(t0);
+    }
+    function apply() {
+      var only = diff && diff.checked, vis = [], n = 0;
+      rows.forEach(function (r) {
+        var on = (f === 'all' || r.getAttribute('data-cat') === f) && (!only || r.getAttribute('data-diff') === 'true');
+        var was = !r.hidden; r.hidden = !on;
+        if (on) { vis.push(r); if (!was || !shown[r.rowIndex]) { r.classList.remove('fresh'); void r.offsetWidth; r.style.setProperty('--n', n++); r.classList.add('fresh'); } }
+        shown[r.rowIndex] = on;
+      });
+      groups.forEach(function (g) { var c = g.getAttribute('data-cat'); g.hidden = !vis.some(function (r) { return r.getAttribute('data-cat') === c; }); });
+      if (!seen) return;
+      cols.forEach(function (c) {
+        var yes = vis.filter(function (r) { return $('td.c-' + c, r).getAttribute('data-v') === 'y'; }).length;
+        var card = cards[c]; if (!card) return;
+        $('[data-tot]', card).textContent = vis.length;
+        card.style.setProperty('--v', vis.length ? Math.round(yes / vis.length * 100) : 0);
+        count(card, yes);
+      });
+    }
+    chips.forEach(function (b) {
+      b.addEventListener('click', function () {
+        f = b.getAttribute('data-f');
+        chips.forEach(function (x) { var on = x === b; x.classList.toggle('on', on); x.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+        apply();
+      });
+    });
+    if (diff) diff.addEventListener('change', apply);
+    function start() { if (seen) return; seen = true; apply(); }
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (es, o) { if (es[0].isIntersecting) { start(); o.disconnect(); } }, { rootMargin: '0px 0px -25% 0px' }).observe(box);
+    else start();
+    apply();
   })();
 
   /* ---------- Kontakt-Dialog: Anleitung zuerst, Mail erst auf bewussten Klick ---------- */
