@@ -1,12 +1,386 @@
-<!doctype html>
-<html lang="de">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>opsek.ch</title>
-</head>
-<body>
-<h1>opsek.ch</h1>
-<p>Kommt bald.</p>
-</body>
-</html>
+<a class="skip" href="#inhalt">Zum Inhalt</a>
+
+<header class="hdr" id="top">
+  <div class="rail hdr-in">
+    <a class="brand" href="#top" aria-label="OpSek, zum Seitenanfang">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="2.5" width="15" height="19" rx="3.5"/><path d="M8 6.5h8" class="cam"/><circle cx="12" cy="14" r="2.2"/><path d="M12 16.2v2"/></svg>
+      <span>OpSek</span>
+    </a>
+    <nav class="nav" aria-label="Hauptnavigation">
+      <a href="#warum">Warum</a>
+      <a href="#schichten">Schichten</a>
+      <a href="#modelle">Base und Gold</a>
+      <a href="#ablauf">Ablauf</a>
+      <a href="#fragen">Fragen</a>
+    </nav>
+    <p class="depth" aria-hidden="true"><span>Ebene</span><b data-depth>00</b><span>/ 07</span></p>
+    <a class="btn btn-sm" href="#kontakt">Anfragen</a>
+  </div>
+  <i class="progress" aria-hidden="true"><em></em></i>
+</header>
+
+<main id="inhalt">
+
+<!-- HERO: Was ist das? -->
+<!-- BILDRECHTE: Hero-Bild von Dogus für OpSek erstellt (KI-Bild), Texte entfernt, Farben angepasst, links zugeschnitten (ohne Kabel und Retusche). Zeigt das GrapheneOS-Logo: Markenhinweis im Footer. -->
+<section class="hero" aria-labelledby="h-hero">
+  <div class="rail hero-grid">
+    <div class="hero-copy">
+      <p class="kicker"><i class="dot"></i>Basel · Bern · Zürich</p>
+      <h1 id="h-hero" data-split>Schweiz. Sicherheit. <em>Klarheit.</em></h1>
+      <p class="lead">Ein Google Pixel mit GrapheneOS, von uns eingerichtet, geprüft und persönlich übergeben. Deine Daten bleiben verschlüsselt, Kamera, Mikrofon, Funk und Kabel stehen unter deiner Kontrolle.</p>
+      <div class="actions">
+        <a class="btn" href="#schichten" data-magnet>Durch die Schichten</a>
+        <a class="btn btn-line" href="#kontakt" data-magnet>Anfragen</a>
+      </div>
+    </div>
+    <figure class="hero-visual" aria-hidden="true">
+      <div class="hv-frame">
+        <img src="img/hero-stack.webp" srcset="img/hero-stack-1200.webp 1200w, img/hero-stack.webp 1708w" sizes="(max-width: 900px) 100vw, 60vw" width="1708" height="1156" alt="" fetchpriority="high" decoding="async">
+        <i class="hv-scan"></i>
+        <i class="tick tl"></i><i class="tick tr"></i><i class="tick bl"></i><i class="tick br"></i>
+      </div>
+      <figcaption class="hv-cap"><span>Gerät <b data-hex="4">0000</b></span><span>Signatur <b data-hex="12">000000000000</b></span><span>Symbolbild</span></figcaption>
+    </figure>
+  </div>
+  <ul class="rail facts" aria-label="Das Wichtigste in Kürze">
+    <li><b>Google Pixel</b><span>mit GrapheneOS</span></li>
+    <li><b>Keine Werbe- und Analysedienste</b><span>im System</span></li>
+    <li><b>Eingerichtet in der Schweiz</b><span>Basel, Bern, Zürich</span></li>
+    <li><b>Echtheit prüfbar</b><span>gemeinsam bei der Übergabe</span></li>
+  </ul>
+  <p class="rail tele" aria-hidden="true"><span>Lokalzeit Bern <b data-clock>00:00:00</b></span><span>Diese Seite <b>0 Cookies · 0 Tracker</b></span><span>Skript <b>nur Darstellung</b></span></p>
+</section>
+
+<!-- WARUM -->
+<section class="sec" id="warum" aria-labelledby="h-warum">
+  <div class="rail split">
+    <div>
+      <p class="sh"><b>01</b><span>Warum</span></p>
+      <h2 id="h-warum" data-decrypt>Ein normales Telefon redet viel.</h2>
+      <p class="body">Ein Standardgerät schickt laufend Daten an Hersteller, Werbenetze und Firmen, die du nie kennengelernt hast. Meist merkst du davon nichts.</p>
+      <p class="body">Ein OpSek-Gerät ist so eingerichtet, dass es möglichst wenig nach aussen meldet. Was du speicherst und schreibst, bleibt verschlüsselt. Lesen kann es nur, wer den Schlüssel hat.</p>
+    </div>
+    <div class="vault" data-vault>
+      <div class="persp" role="radiogroup" aria-label="Blickwinkel wählen">
+        <button type="button" role="radio" aria-checked="true" data-v="du">Du<i>mit Schlüssel</i></button>
+        <button type="button" role="radio" aria-checked="false" data-v="anbieter">Anbieter<i>ohne Schlüssel</i></button>
+        <button type="button" role="radio" aria-checked="false" data-v="gesperrt">Gesperrt<i>nach Neustart</i></button>
+      </div>
+      <div class="lamp" data-lamp data-view="du">
+        <div class="lamp-head" aria-hidden="true"><span>Nachricht · Ende-zu-Ende</span><span class="lh-state" data-lh>unter der Linse lesbar</span></div>
+        <div class="lamp-cipher" aria-hidden="true" data-cipher></div>
+        <div class="lamp-layer lamp-plain" aria-hidden="true">
+          <div class="msg">
+            <p class="msg-meta"><span>Kontakt A</span><span>ohne Nummer</span><span>14.02</span></p>
+            <p class="msg-text">Treffen am Donnerstag, 14 Uhr, beim Hinterausgang. Die Unterlagen bringe ich mit.</p>
+          </div>
+        </div>
+        <div class="lamp-layer lamp-prov" aria-hidden="true">
+          <dl class="prov">
+            <div><dt>Inhalt</dt><dd>nicht lesbar</dd></div>
+            <div><dt>Telefonnummer</dt><dd>keine</dd></div>
+            <div><dt>Schlüssel</dt><dd>nur bei dir und deinem Kontakt</dd></div>
+          </dl>
+        </div>
+        <div class="lamp-lock" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/><circle cx="12" cy="15.5" r="1.4"/></svg>
+          <p><b>Ruhezustand</b>Der Schlüssel ist nicht im Speicher. Ohne deine PIN bleibt alles verschlüsselt.</p>
+        </div>
+        <div class="lens" aria-hidden="true"><i class="ring"></i><i class="ring2"></i><i class="cross"></i><span class="lens-key" data-lenskey>Schlüssel 0000·0000</span></div>
+        <p class="lamp-hint" aria-live="polite" data-hint><span class="hint-fine">Fahr mit der Maus darüber.</span><span class="hint-touch">Tipp auf eine Stelle.</span> Unter der Linse liegt dein Schlüssel. Nur damit wird die Nachricht lesbar.</p>
+      </div>
+      <p class="sr">Beispiel in drei Blickwinkeln: Mit deinem Schlüssel ist die Nachricht lesbar. Der Anbieter des Messengers sieht nur verschlüsselte Zeichen und keine Telefonnummer. Nach einem Neustart ist der Schlüssel nicht im Speicher, ohne PIN bleibt alles verschlüsselt.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WAS DU BEKOMMST -->
+<section class="sec" id="bekommst" aria-labelledby="h-bekommst">
+  <div class="rail">
+    <p class="sh"><b>02</b><span>Was du bekommst</span></p>
+    <h2 id="h-bekommst" data-decrypt>Gerät, Anleitung, Community.</h2>
+    <ol class="get">
+      <li class="rv"><span class="num">A</span><h3>Das Gerät</h3><p>Ein neues Google Pixel aus dem Schweizer Handel, von Grund auf neu eingerichtet. Jedes Gerät wird einzeln geprüft und erst dann übergeben.</p></li>
+      <li class="rv"><span class="num">B</span><h3>Die Anleitung</h3><p>Ein Handbuch zu deinem Setup. Es erklärt, was auf deinem Gerät läuft, warum es so eingerichtet ist und worauf du im Alltag achtest. Zum Nachschlagen, nicht zum einmal Lesen.</p></li>
+      <li class="rv"><span class="num">C</span><h3>Die Community</h3><p>Wer ein Gerät von uns hat, gehört dazu. Deine Fragen und Erfahrungen sind willkommen, wir bauen das gemeinsam weiter.</p></li>
+    </ol>
+    <!-- VIDEO: Ausschnitt aus dem Einrichtungsprotokoll (Quelle: GrapheneOS_Forensik.mp4 von Dogus). Nur Handy-Bildschirm, ohne App-Namen, ohne Ton, 14 s, ca. 360 KB. Lädt erst, wenn sichtbar. -->
+    <figure class="protocol rv" data-protocol>
+      <div class="pr-phone">
+        <video muted playsinline loop preload="none" poster="img/protokoll-poster.webp" width="316" height="536" aria-label="Ausschnitt aus dem Einrichtungsprotokoll: Schichten, Systemprüfung, App-Rechte und Updates">
+          <source data-src="media/protokoll.webm" type="video/webm">
+          <source data-src="media/protokoll.mp4" type="video/mp4">
+        </video>
+        <button class="pr-toggle" type="button" aria-label="Video anhalten" data-pr-toggle><i></i></button>
+        <span class="pr-rec" aria-hidden="true"><i></i>Protokoll</span>
+      </div>
+      <figcaption><b>Aus dem Einrichtungsprotokoll.</b> Jede Einstellung wird geprüft und festgehalten, bevor das Gerät zu dir kommt. Ausschnitt, ohne Ton.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- SCHICHTEN: Wie schützt es mich? -->
+<!-- VERIFY: Titan M2 beim aktuellen Pixel laut Google Store bestätigt (22.10.2026). Profil-Limit 32 laut grapheneos.org/features (23.10.2026). -->
+<section class="sec layers" id="schichten" aria-labelledby="h-schichten">
+  <div class="rail">
+    <p class="sh"><b>03</b><span>Die Schichten</span></p>
+    <h2 id="h-schichten" data-decrypt>Sieben Schichten, von der App bis zum Chip.</h2>
+    <p class="body intro">Scroll nach unten und geh mit uns durch das Gerät. Jede Schicht schützt etwas anderes. Bei jeder steht auch, wo ihre Grenze liegt.</p>
+  </div>
+  <div class="rail layers-grid">
+    <div class="stage" aria-hidden="true">
+      <div class="scene" data-scene>
+        <div class="stack" data-stack>
+          <div class="phone"><i class="cambar"></i><i class="glow"></i></div>
+          <div class="plate" style="--i:6"><span class="pl-n">01</span><span class="pl-t">Apps und Rechte</span><svg viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1.5"/><rect x="14" y="4" width="6" height="6" rx="1.5"/><rect x="4" y="14" width="6" height="6" rx="1.5"/><path d="M14 17h6M17 14v6"/></svg></div>
+          <div class="plate" style="--i:5"><span class="pl-n">02</span><span class="pl-t">Kommunikation</span><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M9 10h6"/></svg></div>
+          <div class="plate" style="--i:4"><span class="pl-n">03</span><span class="pl-t">Profile</span><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="7" rx="2"/><rect x="4" y="13" width="16" height="7" rx="2"/></svg></div>
+          <div class="plate" style="--i:3"><span class="pl-n">04</span><span class="pl-t">Funk und Kabel</span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="1.6"/><path d="M8.5 8.5a5 5 0 0 0 0 7M15.5 8.5a5 5 0 0 1 0 7M5.6 5.6a9 9 0 0 0 0 12.8M18.4 5.6a9 9 0 0 1 0 12.8"/></svg></div>
+          <div class="plate" style="--i:2"><span class="pl-n">05</span><span class="pl-t">System</span><svg viewBox="0 0 24 24"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg></div>
+          <div class="plate" style="--i:1"><span class="pl-n">06</span><span class="pl-t">Systemstart</span><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></div>
+          <div class="plate chip" style="--i:0"><span class="pl-n">07</span><span class="pl-t">Sicherheitschip</span><svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/></svg></div>
+        </div>
+      </div>
+      <p class="stage-cap"><span data-layer-n>01 / 07</span><b data-layer-t>Apps und Rechte</b></p>
+    </div>
+
+    <div class="layer-list">
+      <article class="layer" data-layer="0">
+        <p class="ly-n">Ebene 01</p>
+        <h3>Apps und Rechte</h3>
+        <p>Jede App bekommt nur, was sie braucht. Kamera, Mikrofon, Standort, Netzwerk und Sensoren gibst du einzeln frei. Kamera und Mikrofon schaltest du mit einem Fingertipp für alle Apps ab.</p>
+        <p class="limit"><b>Grenze</b>Eine App, der du ein Recht gibst, kann es nutzen. Was du installierst, bleibt deine Entscheidung.</p>
+      </article>
+      <article class="layer" data-layer="1">
+        <p class="ly-n">Ebene 02</p>
+        <h3>Kommunikation</h3>
+        <p>Ein Messenger ohne Telefonnummer und ohne Konto, Ende-zu-Ende verschlüsselt und einsatzbereit. Mit Gold ist ab Werk eingestellt, dass Nachrichten nach einer Frist verschwinden.</p>
+        <p class="limit"><b>Grenze</b>Wer mit dir schreibt, liest deine Nachrichten. Ein Bildschirmfoto auf der anderen Seite lässt sich nicht verhindern.</p>
+      </article>
+      <article class="layer" data-layer="2">
+        <p class="ly-n">Ebene 03</p>
+        <h3>Profile</h3>
+        <p>Alltag und Vertrauliches laufen in getrennten Profilen, jedes mit eigenen Apps, Daten und einem eigenen Schlüssel. Wir richten zwei ein. GrapheneOS erlaubt bis zu 32, etwa eines für Reisen oder für eine App, der du nicht traust. Beendest du ein Profil, laufen seine Apps nicht mehr und sein Schlüssel ist aus dem Speicher gelöscht.</p>
+        <div class="prof" data-prof>
+          <button type="button" class="on" data-p="Alltag">Alltag<i>Schlüssel A</i></button>
+          <button type="button" data-p="Vertraulich">Vertraulich<i>Schlüssel B</i></button>
+          <button type="button" data-p="Reise">Reise<i>Schlüssel C</i></button>
+          <p class="prof-st" aria-live="polite">Alltag aktiv · andere Profile beendet</p>
+        </div>
+        <p class="limit"><b>Grenze</b>Ein Profil ist Trennung, kein Versteck. Wer dein entsperrtes Gerät in der Hand hat, sieht die Profile.</p>
+      </article>
+      <article class="layer" data-layer="3">
+        <p class="ly-n">Ebene 04</p>
+        <h3>Funk und Kabel</h3>
+        <p>NFC und Bluetooth sind ab Werk aus, WLAN und Bluetooth schalten sich nach einer Zeit selbst ab. In jedem WLAN zeigt das Gerät eine neue Adresse. Am gesperrten Gerät lässt der USB-C-Anschluss nur Strom durch, keine Daten.</p>
+        <p class="limit"><b>Grenze</b>Dein Mobilfunkanbieter sieht weiterhin, wo dein Gerät eingebucht ist.</p>
+      </article>
+      <article class="layer" data-layer="4">
+        <p class="ly-n">Ebene 05</p>
+        <h3>System</h3>
+        <p>GrapheneOS ist quelloffen und gegen Angriffe gehärtet. Es läuft ohne Werbe- und Analysedienste. Updates kommen signiert. Bleibt das Gerät lange gesperrt, startet es neu und legt deine Daten wieder still. Apps, die Google-Dienste verlangen, laufen auf Wunsch in einer Sandbox.</p>
+        <p class="limit"><b>Grenze</b>Ein Gerät ohne Updates altert. Installiere sie, wenn sie kommen.</p>
+      </article>
+      <article class="layer" data-layer="5">
+        <p class="ly-n">Ebene 06</p>
+        <h3>Systemstart</h3>
+        <p>Bei jedem Start prüft das Gerät, ob das System unverändert ist (Verified Boot). Bei der Übergabe kontrollieren wir die Signatur gemeinsam mit dir, damit du siehst, dass niemand dazwischen etwas verändert hat.</p>
+        <p class="limit"><b>Grenze</b>Die Prüfung sagt, dass das System echt ist. Sie sagt nichts über Apps, die du später installierst.</p>
+      </article>
+      <article class="layer" data-layer="6">
+        <p class="ly-n">Ebene 07</p>
+        <h3>Sicherheitschip</h3>
+        <p>Die Schlüssel zu deinen Daten hängen am Sicherheitschip Titan M2 und an deiner PIN. Der Chip bremst falsche PIN-Eingaben mit wachsenden Wartezeiten. Eine zweite PIN, die Notfall-PIN, löscht das Gerät auf Wunsch sofort und unwiderruflich, inklusive eSIM.</p>
+        <p class="limit"><b>Grenze</b>Eine kurze PIN ist schnell erraten. Wir zeigen dir bei der Übergabe, wie lang sie sein sollte.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- BASE UND GOLD -->
+<!-- VERIFY: Gold-Funktionen am echten Gerät testen (Prüfliste B). VPN-Weitergabebedingungen prüfen. -->
+<section class="sec" id="modelle" aria-labelledby="h-modelle">
+  <div class="rail">
+    <p class="sh"><b>04</b><span>Base und Gold</span></p>
+    <h2 id="h-modelle" data-decrypt>Zwei Ausstattungen. Ein Gerät.</h2>
+    <p class="body intro">Base enthält alle sieben Schichten. Gold schützt zusätzlich, wohin deine vertraulichen Verbindungen gehen.</p>
+    <div class="tier" data-tier="base">
+      <div class="seg" role="radiogroup" aria-label="Ausstattung wählen">
+        <button type="button" role="radio" aria-checked="true" data-set="base">Base</button>
+        <button type="button" role="radio" aria-checked="false" data-set="gold">Gold</button>
+        <i class="seg-bg" aria-hidden="true"></i>
+      </div>
+      <div class="tier-body">
+        <p class="tier-for" data-for-base>Für alle, die Alltag und Vertrauliches sauber trennen wollen.</p>
+        <p class="tier-for" data-for-gold hidden>Für alle, die beruflich vertraulich kommunizieren oder oft reisen.</p>
+        <ul class="feat">
+          <li>Neues Google Pixel mit GrapheneOS</li>
+          <li>Ohne Werbe- und Analysedienste</li>
+          <li>Getrennte Profile, zwei eingerichtet</li>
+          <li>Messenger ohne Nummer, einsatzbereit</li>
+          <li>App-Rechte einzeln geprüft</li>
+          <li>Offline-Karten</li>
+          <li>Notfall-PIN</li>
+          <li>Echtheitsprüfung bei der Übergabe</li>
+          <li class="g">Verschlüsselte Verbindung (VPN) für das vertrauliche Profil, 12 Monate</li>
+          <li class="g">Kein Netz im vertraulichen Profil ohne diese Verbindung</li>
+          <li class="g">Anonymisiertes Routing für ausgewählte Apps</li>
+          <li class="g">Verschwindende Nachrichten ab Werk eingestellt</li>
+        </ul>
+        <a class="btn" href="mailto:{{CONTACT}}?subject=Interesse%20an%20OpSek" data-tier-cta>Base anfragen</a>
+      </div>
+    </div>
+    <div class="which">
+      <h3>Welche passt?</h3>
+      <p class="which-q"><span>Was willst du schützen?</span><span>Vor wem?</span><span>Was passiert, wenn es schiefgeht?</span></p>
+      <p>Sicherheitsleute beginnen mit diesen drei Fragen. Geht es dir um Datensammler und die Trennung von Alltag und Beruf, reicht Base. Reist du beruflich oder soll dein Anbieter nicht sehen, wohin deine vertraulichen Verbindungen gehen, nimm Gold. Rechnest du mit gezielten Angriffen gut ausgestatteter Gegner, reicht kein Gerät allein. Dann schreib uns vorher.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ABLAUF -->
+<section class="sec" id="ablauf" aria-labelledby="h-ablauf">
+  <div class="rail">
+    <p class="sh"><b>05</b><span>Ablauf</span></p>
+    <h2 id="h-ablauf" data-decrypt>Von der ersten Mail bis zur Übergabe.</h2>
+    <ol class="steps" data-steps>
+      <li><span class="st-n">1</span><h3>Anfrage</h3><p>Du schreibst uns, gern über eine anonyme Weiterleitungsadresse.</p></li>
+      <li><span class="st-n">2</span><h3>Gespräch</h3><p>Wir klären, was du schützen willst, und ob Base oder Gold passt.</p></li>
+      <li><span class="st-n">3</span><h3>Gerät</h3><p>Wir kaufen ein neues Pixel im Schweizer Handel.</p></li>
+      <li><span class="st-n">4</span><h3>Einrichtung</h3><p>Einrichten und prüfen nach festem Ablauf, in 5 bis 10 Werktagen.</p></li>
+      <li><span class="st-n">5</span><h3>Übergabe</h3><p>Persönlich in Basel, Bern oder Zürich, oder versicherter Versand. Die Echtheit prüfen wir gemeinsam, deine PINs legst du selbst fest.</p></li>
+      <i class="steps-line" aria-hidden="true"><em></em></i>
+    </ol>
+  </div>
+</section>
+
+<!-- GRENZEN -->
+<section class="sec" id="grenzen" aria-labelledby="h-grenzen">
+  <div class="rail">
+    <p class="sh"><b>06</b><span>Ehrlich gesagt</span></p>
+    <h2 id="h-grenzen" data-decrypt>Was ein Gerät allein nicht kann.</h2>
+    <ul class="limits">
+      <li class="rv"><h3>Kein Schutz vor allem</h3><p>Gegen gezielte Angriffe gut ausgestatteter Gegner hilft ein Gerät, aber es reicht nicht allein.</p></li>
+      <li class="rv"><h3>Kein Versteck</h3><p>Profile trennen. Sie verbergen nicht, dass es sie gibt.</p></li>
+      <li class="rv"><h3>Das Netz bleibt das Netz</h3><p>Dein Mobilfunkanbieter sieht, wo dein Gerät eingebucht ist, auch mit Gold.</p></li>
+      <li class="rv"><h3>Du bleibst entscheidend</h3><p>Deine PIN, deine Updates und die Apps, die du installierst, bestimmen mit, wie sicher das Gerät bleibt.</p></li>
+    </ul>
+  </div>
+</section>
+
+<!-- FÜR WEN -->
+<section class="sec" id="fuer-wen" aria-labelledby="h-wen">
+  <div class="rail">
+    <p class="sh"><b>07</b><span>Für wen</span></p>
+    <h2 id="h-wen" data-decrypt>Für alle, die Vertrauliches tragen.</h2>
+    <ul class="who">
+      <li><b>Journalismus</b><span>Quellen bleiben Quellen.</span></li>
+      <li><b>Medizin und Pflege</b><span>Patientendaten gehören auf kein Standardgerät.</span></li>
+      <li><b>Banking und Beratung</b><span>Kundengespräche bleiben vertraulich, auch unterwegs.</span></li>
+      <li><b>Sicherheitsdienste</b><span>Ein Gerät, das wenig nach aussen meldet.</span></li>
+      <li><b>Reisende</b><span>Alltag und Vertrauliches sauber getrennt.</span></li>
+      <li><b>Privatpersonen</b><span>Wer nicht will, dass das eigene Telefon Protokoll führt.</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- DATENBLATT -->
+<!-- VERIFY: 7 Jahre Updates bei Google für das konkrete Modell prüfen. Hardware-Speicherschutz (MTE) erst nach Prüfung ergänzen. -->
+<section class="sec" id="datenblatt" aria-labelledby="h-daten">
+  <div class="rail">
+    <p class="sh"><b>08</b><span>Datenblatt</span></p>
+    <h2 id="h-daten" data-decrypt>Die Technik in Zahlen.</h2>
+    <dl class="spec">
+      <div><dt>Gerät</dt><dd>Google Pixel, aktuelles Modell, neu aus dem Schweizer Handel</dd></div>
+      <div><dt>Betriebssystem</dt><dd>GrapheneOS, quelloffen, signierte Updates</dd></div>
+      <div><dt>Updates</dt><dd>sieben Jahre laut Google</dd></div>
+      <div><dt>Sicherheitschip</dt><dd>Titan M2, laut Google</dd></div>
+      <div><dt>Systemstart</dt><dd>Verified Boot, Signatur bei Übergabe prüfbar</dd></div>
+      <div><dt>Dateiinhalte</dt><dd><code>AES-256-XTS</code></dd></div>
+      <div><dt>Dateinamen</dt><dd><code>AES-256-CTS</code></dd></div>
+      <div><dt>Profile</dt><dd>zwei eingerichtet, bis zu 32, eigener Schlüssel je Profil</dd></div>
+      <div><dt>USB-C</dt><dd>gesperrt: nur Laden</dd></div>
+      <div><dt>Auto-Neustart</dt><dd>Standard 18 h, einstellbar</dd></div>
+      <div><dt>Funk</dt><dd>NFC und Bluetooth ab Werk aus, Zeitlimit für WLAN und Bluetooth</dd></div>
+      <div><dt>Telemetrie</dt><dd>keine Analysedienste im System</dd></div>
+    </dl>
+    <p class="src">Quellen: <a href="https://grapheneos.org/features" rel="noopener noreferrer">grapheneos.org/features</a>, <a href="https://grapheneos.org/faq" rel="noopener noreferrer">grapheneos.org/faq</a>, Google Store. Stand Oktober 2026. Funktionen können sich mit Updates ändern.</p>
+  </div>
+</section>
+
+<!-- FRAGEN -->
+<section class="sec" id="fragen" aria-labelledby="h-fragen">
+  <div class="rail split split-57">
+    <div class="side">
+      <p class="sh"><b>09</b><span>Fragen</span></p>
+      <h2 id="h-fragen" data-decrypt>Was oft gefragt wird.</h2>
+      <p class="body">Deine Frage fehlt? Schreib uns, wir antworten persönlich.</p>
+      <a class="btn btn-line" href="#kontakt">Frage stellen</a>
+    </div>
+    <div class="faq">
+      <details><summary>Kann ich meine gewohnten Apps nutzen?</summary><p>Die meisten ja. Apps, die Google-Dienste verlangen, laufen auf Wunsch in einer Sandbox, mit normalen App-Rechten. Am besten installierst du sie im Alltagsprofil, nicht im vertraulichen.</p></details>
+      <details><summary>Kennt ihr meine PINs?</summary><p>Nein. Du legst alle PINs bei der Übergabe selbst fest. Wir sehen sie nicht und speichern nichts von deinen Inhalten.</p></details>
+      <details><summary>Was kostet ein Gerät?</summary><p>Schreib uns kurz, wofür du es brauchst. Du bekommst eine Antwort mit Angebot für Base und Gold.</p></details>
+      <details><summary>Gibt es Support?</summary><p>OpSek ist ein Einmalverkauf. Dafür bekommst du die Anleitung zum Behalten und den Zugang zur Community, in der Fragen willkommen sind.</p></details>
+      <details><summary>Muss ich technisch etwas können?</summary><p>Nein. Das Gerät kommt fertig eingerichtet. Bei der Übergabe gehen wir die wichtigsten Handgriffe zusammen durch.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- WER WIR SIND + MITMACHEN -->
+<section class="sec" id="wir" aria-labelledby="h-wir">
+  <div class="rail split">
+    <div>
+      <p class="sh"><b>10</b><span>Wer wir sind</span></p>
+      <h2 id="h-wir" data-decrypt>Ein offenes Netzwerk.</h2>
+      <p class="body">Menschen, die digitale Sicherheit ernst nehmen. Der Kern sitzt in Basel, Bern und Zürich. Um uns herum denken weitere Leute an denselben Fragen, aus dem IT-Umfeld, aus dem Studium und aus der Praxis. Es gibt keine Hierarchie, nur eine gemeinsame Überzeugung: Ein Smartphone sollte für dich arbeiten.</p>
+    </div>
+    <div class="join">
+      <h3>Mitmachen</h3>
+      <p>Du musst nichts kaufen, um dabei zu sein. Wer mitdenken oder mitbauen will, schreibt uns. Technisches Wissen brauchst du nicht, es genügt, dass du dieselben Fragen stellst.</p>
+      <a class="btn btn-sm btn-line" href="mailto:{{CONTACT}}?subject=Mitmachen%20bei%20OpSek">Mitmachen</a>
+    </div>
+  </div>
+</section>
+
+<!-- KONTAKT -->
+<section class="sec contact" id="kontakt" aria-labelledby="h-kontakt">
+  <div class="rail split split-57">
+    <div>
+      <p class="sh"><b>11</b><span>Kontakt</span></p>
+      <h2 id="h-kontakt" data-decrypt>Schreib uns.</h2>
+      <a class="mail" href="mailto:{{CONTACT}}?subject=Interesse%20an%20OpSek" data-magnet><span>{{CONTACT}}</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+    </div>
+    <div class="contact-side">
+      <p class="body">Interesse an einem Gerät, eine Frage oder einfach ein Gespräch. Wir antworten persönlich.</p>
+      <p class="tip"><b>Tipp</b>Schreib uns über eine anonyme Weiterleitungsadresse, zum Beispiel mit Apples Funktion «E-Mail-Adresse verbergen». Das ist freiwillig und kostet nichts.</p>
+      <ul class="contact-facts"><li><b>Übergabe</b>Basel, Bern, Zürich oder versicherter Versand</li><li><b>Dauer</b>5 bis 10 Werktage ab Bestellung</li><li><b>Daten</b>keine Inhalte von dir bei uns gespeichert</li></ul>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="rail">
+    <p class="foot-mark" aria-hidden="true">OpSek</p>
+    <nav aria-label="Rechtliches">
+      <!-- PLATZHALTER: Rechtsseiten folgen nach juristischer Prüfung. Identität und Postadresse sind nach UWG Art. 3 Abs. 1 lit. s Pflicht. -->
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
+    </nav>
+    <p>Anbieter und Postadresse: [vor Livegang einsetzen, siehe Impressum]</p>
+    <p>Google und Pixel sind Marken von Google LLC. GrapheneOS ist ein Projekt Dritter. OpSek steht in keiner Verbindung zu Google oder dem GrapheneOS-Projekt und wird von diesen weder unterstützt noch empfohlen.</p>
+    <p>Diese Seite setzt keine Cookies und keine Tracker ein und lädt nichts von Drittanbietern. Schrift und Bilder liegen auf diesem Server. Das Skript dient nur der Darstellung.</p>
+    <p class="meta"><span>Stand Oktober 2026</span><span>Basel · Bern · Zürich</span><span>DE</span><span>{{CONTACT}}</span></p>
+  </div>
+</footer>
+
+<a class="totop" href="#top" aria-label="Nach oben"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></a>
+
+<!-- HINWEIS: kein Cookie-Consent im rechtlichen Sinn nötig, da keine Cookies und kein Tracking (zu prüfen). Reine Transparenz. -->
+<div class="consent" id="hinweis" hidden>
+  <p>Diese Seite braucht nichts von dir. Kein Cookie, kein Tracker, nichts von Dritten. Das Skript ist nur für die Darstellung.</p>
+  <button class="btn btn-sm" type="button" data-consent-ok>Verstanden</button>
+</div>
