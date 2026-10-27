@@ -1,0 +1,39 @@
+# OpSek – Server-Regeln für Infomaniak (Apache)
+# 1) Immer HTTPS und immer die Hauptadresse opsek.ch (ohne www)
+# 2) Sicherheits-Header
+# 3) Eigene 404-Seite
+
+RewriteEngine On
+
+# www.opsek.ch -> https://opsek.ch (egal ob http oder https)
+RewriteCond %{HTTP_HOST} ^www\.opsek\.ch$ [NC]
+RewriteRule ^ https://opsek.ch%{REQUEST_URI} [R=301,L]
+
+# http -> https
+# Beide Bedingungen müssen zutreffen, damit es auch hinter einem
+# Infomaniak-Proxy keine Endlosschleife gibt.
+RewriteCond %{HTTPS} !=on
+RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+RewriteRule ^ https://opsek.ch%{REQUEST_URI} [R=301,L]
+
+<IfModule mod_headers.c>
+  # HSTS: Browser öffnen die Seite nur noch verschlüsselt.
+  # Bewusst vorsichtig: 1 Tag, ohne Subdomains, ohne Preload.
+  # Nach ca. 2 Wochen ohne Probleme auf max-age=31536000 erhöhen.
+  Header always set Strict-Transport-Security "max-age=86400"
+
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "DENY"
+  Header always set Content-Security-Policy "frame-ancestors 'none'; base-uri 'none'; object-src 'none'; form-action 'none'"
+  Header always set Referrer-Policy "no-referrer"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+  Header always set Cross-Origin-Opener-Policy "same-origin"
+</IfModule>
+
+<IfModule mod_mime.c>
+  AddType application/manifest+json .webmanifest
+  AddType video/webm .webm
+  AddType font/woff2 .woff2
+</IfModule>
+
+ErrorDocument 404 /404.html
