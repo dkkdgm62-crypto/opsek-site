@@ -204,8 +204,10 @@
     /* Szene passt sich der Bühne an: gleiche Proportionen auf Handy, Tablet und Desktop */
     var FIT_W = 600, FIT_H = 640, SHIFT = 74, CAP = 46;
     function fit() {
-      var s = Math.min(stage.clientWidth / FIT_W, (stage.clientHeight - CAP) / FIT_H, 1);
+      var RAIL = lnav ? 44 : 0;
+      var s = Math.min((stage.clientWidth - RAIL) / FIT_W, (stage.clientHeight - CAP) / FIT_H, 1);
       scene.style.setProperty('--sc', s.toFixed(3));
+      scene.style.marginLeft = RAIL + 'px';
       scene.style.setProperty('--oy', (SHIFT * s - CAP / 2 + 6).toFixed(1) + 'px');
     }
     fit(); window.addEventListener('resize', fit);
@@ -218,8 +220,8 @@
       stack.classList.toggle('has-on', i >= 0);
       var n = i >= 0 ? ('0' + (i + 1)).slice(-2) : '00';
       if (depth) depth.textContent = n;
-      lnav.classList.toggle('live', i >= 0); hdr.classList.toggle('show-lnav', i >= 0);
-      chips.forEach(function (a, k) { a.classList.toggle('on', k === i); a.classList.toggle('done', i >= 0 && k < i); });
+      lnav.classList.toggle('live', i >= 0);
+      chips.forEach(function (a, k) { a.classList.toggle('on', k === i); a.classList.toggle('done', i >= 0 && k < i); if (k === i) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
       if (depthT) depthT.textContent = i >= 0 ? $('h3', arts[i]).textContent : '';
       if (i >= 0) { capN.textContent = n + ' / 07'; capT.textContent = $('h3', arts[i]).textContent; }
     }
@@ -263,7 +265,7 @@
       bs.forEach(function (b) { b.setAttribute('aria-checked', b.getAttribute('data-set') === v ? 'true' : 'false'); });
       fb.hidden = v !== 'base'; fg.hidden = v !== 'gold';
       cta.textContent = v === 'gold' ? T.ctaGold : T.ctaBase;
-      cta.href = cta.href.replace(/subject=[^&]*/, 'subject=' + encodeURIComponent(v === 'gold' ? T.subjGold : T.subjBase));
+      cta.setAttribute('data-contact', v);
     }
     bs.forEach(function (b) {
       b.addEventListener('click', function () { set(b.getAttribute('data-set')); });
@@ -349,6 +351,88 @@
       });
     }, { threshold: 0.35 }).observe(fig);
     d.addEventListener('visibilitychange', function () { if (d.hidden && !v.paused) v.pause(); });
+  })();
+
+  /* ---------- Karte: verschlüsselte Wege zwischen Beispielorten ---------- */
+  (function net() {
+    var el = $('[data-net]'); if (!el) return;
+    var route = $('[data-net-route]', el), hex = $('[data-net-hex]', el);
+    var names = $$('.net-n span', el).map(function (n) { return n.textContent; });
+    var pairs = [[2, 0], [2, 1], [2, 3], [3, 0], [3, 1]];
+    var k = 0, timer = 0;
+    function tick() {
+      var p = pairs[k++ % pairs.length];
+      if (route) route.textContent = names[p[0]] + ' \u2192 ' + names[p[1]];
+      if (hex) hex.textContent = rnd(4).toUpperCase() + ' ' + rnd(4).toUpperCase() + ' ' + rnd(4).toUpperCase();
+    }
+    function on() { el.classList.add('live'); el.classList.remove('live-off'); if (!reduce && !timer) timer = setInterval(tick, 2600); }
+    function off() { el.classList.remove('live'); el.classList.add('live-off'); clearInterval(timer); timer = 0; }
+    /* Knoten im Markup: 0 Basel, 1 Zürich, 2 Bern, 3 Genf. Wege starten nur in Bern oder Genf. */
+    if (!('IntersectionObserver' in window)) { el.classList.add('drawn'); if (!reduce) on(); return; }
+    new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting) { el.classList.add('drawn'); on(); } else off();
+      });
+    }, { threshold: 0.25 }).observe(el);
+    d.addEventListener('visibilitychange', function () { if (d.hidden) off(); });
+  })();
+
+  /* ---------- Kontakt-Dialog: Anleitung zuerst, Mail erst auf bewussten Klick ---------- */
+  (function contact() {
+    var dlg = $('[data-dialog]'); if (!dlg) return;
+    var addr = dlg.getAttribute('data-addr');
+    var steps = $$('.cd-step', dlg), n = steps.length, cur = 0;
+    var back = $('[data-cd-back]', dlg), next = $('[data-cd-next]', dlg), stepEl = $('[data-cd-step]', dlg), ready = $('.cd-ready', dlg);
+    var subj = $('[data-cd-subj]', dlg), msg = $('[data-cd-msg]', dlg), send = $('[data-cd-send]', dlg), copy = $('[data-cd-copy]', dlg);
+    var opener = null;
+    var canModal = typeof dlg.showModal === 'function';
+    function show(i) {
+      cur = clamp(i, 0, n - 1);
+      steps.forEach(function (s, k) { s.hidden = k !== cur; });
+      dlg.setAttribute('data-step', String(cur + 1));
+      stepEl.textContent = (T.step || '{n}').replace('{n}', cur + 1);
+      back.hidden = cur === 0; next.hidden = cur === n - 1;
+      if (ready) ready.style.visibility = cur === n - 1 ? 'visible' : 'hidden';
+      var body = $('.cd-body', dlg); if (body) body.scrollTop = 0;
+    }
+    function open(kind) {
+      opener = d.activeElement;
+      var k = kind && T.subj && T.subj[kind] ? kind : 'general';
+      if (subj) subj.value = k;
+      show(0);
+      root.classList.add('cd-lock');
+      if (canModal) dlg.showModal(); else dlg.setAttribute('open', '');
+      var h = $('#cd-title', dlg); if (h) { h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
+    }
+    function close() {
+      if (canModal) dlg.close(); else dlg.removeAttribute('open');
+    }
+    dlg.addEventListener('close', function () {
+      root.classList.remove('cd-lock');
+      if (opener && opener.focus) opener.focus({ preventScroll: true });
+    });
+    /* Klick auf den Hintergrund schliesst bewusst NICHT. Nur Schliessen, Abbrechen oder Esc. */
+    dlg.addEventListener('click', function (e) { e.stopPropagation(); });
+    if (!canModal) dlg.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+    $$('[data-cd-close],[data-cd-cancel]', dlg).forEach(function (b) { b.addEventListener('click', close); });
+    back.addEventListener('click', function () { show(cur - 1); });
+    next.addEventListener('click', function () { show(cur + 1); });
+    d.addEventListener('click', function (e) {
+      var t = e.target.closest && e.target.closest('[data-contact]'); if (!t) return;
+      e.preventDefault(); open(t.getAttribute('data-contact'));
+    });
+    send.addEventListener('click', function () {
+      var k = subj ? subj.value : 'general';
+      var s = (T.subj && T.subj[k]) || '';
+      var url = 'mailto:' + addr + '?subject=' + encodeURIComponent(s) + '&body=' + encodeURIComponent(msg ? msg.value : '');
+      window.location.href = url;
+    });
+    copy.addEventListener('click', function () {
+      var old = copy.textContent, ok = function () { copy.textContent = copy.getAttribute('data-copied'); setTimeout(function () { copy.textContent = old; }, 1800); };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(addr).then(ok, function () {});
+    });
+    /* Direkt aufrufbar, z. B. opsek.ch/#schreiben */
+    if (location.hash === '#schreiben') open('general');
   })();
 
   /* ---------- Magnetische Buttons ---------- */
