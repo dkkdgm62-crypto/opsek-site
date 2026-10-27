@@ -2476,13 +2476,13 @@ h1 .w {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #e5736b;
+  background: var(--acc);
   opacity: 0.4;
 }
 .protocol.playing .pr-rec i {
   opacity: 1;
   animation: ping 2s ease-out infinite;
-  box-shadow: 0 0 0 0 rgba(229, 115, 107, 0.5);
+  box-shadow: 0 0 0 0 rgba(143, 184, 255, 0.5);
 }
 .pr-toggle {
   position: absolute;
